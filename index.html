@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Guessing Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Rest of the HTML remains the same -->
+    <div class="game-container">
+        <div class="header">
+            <h1><span class="color-title"><span>C</span><span>o</span><span>l</span><span>o</span><span>r</span></span>
+                Game</h1>
+            <div data-testid="score" class="score">Score: 0</div>
+        </div>
+
+        <div data-testid="gameInstructions" class="instructions">
+            Guess the correct color! Click the matching color button or use number keys (1-6).
+        </div>
+
+        <div data-testid="colorBox" class="color-display"></div>
+
+        <div class="options-container">
+            <div class="options-row">
+                <!-- Color options will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <div data-testid="gameStatus" class="status"></div>
+
+        <div class="controls">
+            <button data-testid="newGameButton" class="new-game-btn">New Game</button>
+        </div>
+    </div>
+
+   
+    <script src="script.js"></script>ip
+</body>
+
+</html>
