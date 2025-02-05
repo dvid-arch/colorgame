@@ -1,4 +1,4 @@
- class ColorGame {
+class ColorGame {
     constructor() {
         this.score = 0;
         this.colors = [
@@ -9,7 +9,7 @@
 
         this.initializeElements();
         this.setupEventListeners();
-        this.startNewGame();
+        this.resetGame();
     }
 
     initializeElements() {
@@ -21,7 +21,7 @@
     }
 
     setupEventListeners() {
-        this.newGameButton.addEventListener('click', () => this.startNewGame());
+        this.newGameButton.addEventListener('click', () => this.resetGame());
 
         document.addEventListener('keydown', (e) => {
             const num = parseInt(e.key);
@@ -106,17 +106,24 @@
         }, 1500);
     }
 
+    resetGame() {
+        this.score = 0; // Reset the score
+        this.startNewGame();
+    }
+
     startNewGame() {
         this.targetColor = this.getRandomColor();
         this.colorDisplay.style.backgroundColor = this.targetColor;
-
+        
         this.optionsRow.innerHTML = '';
         const options = this.generateColorOptions();
         options.forEach((color, index) => {
             this.optionsRow.appendChild(this.createColorOption(color, index));
         });
+
+        // Update the score display
+        this.scoreDisplay.textContent = `Score: ${this.score}`;
     }
 }
-
 
 new ColorGame();
