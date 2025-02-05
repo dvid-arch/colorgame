@@ -6,6 +6,7 @@ class ColorGame {
             '#FFEEAD', '#D4A5A5', '#9B59B6', '#3498DB',
             '#FF9F43', '#58B19F', '#2ECC71', '#E74C3C'
         ];
+        
 
         this.initializeElements();
         this.setupEventListeners();
@@ -28,12 +29,22 @@ class ColorGame {
             if (num >= 1 && num <= 6) {
                 const option = this.optionsRow.children[num - 1];
                 if (option) {
-                    this.handleGuess(option.style.backgroundColor, option);
+                    // Get the computed style to ensure consistent color format
+                    const computedColor = getComputedStyle(option).backgroundColor;
+                    const targetComputedColor = getComputedStyle(this.colorDisplay).backgroundColor;
+                    
+                    // Compare the computed RGB values
+                    if (computedColor === targetComputedColor) {
+                        this.handleGuess(this.targetColor, option);
+                    } else {
+                        this.handleGuess(computedColor, option);
+                    }
                 }
             }
         });
     }
 
+    
     getRandomColor() {
         return this.colors[Math.floor(Math.random() * this.colors.length)];
     }
@@ -60,7 +71,17 @@ class ColorGame {
         button.style.backgroundColor = color;
         button.title = `Option ${index + 1} (Press ${index + 1})`;
 
-        button.addEventListener('click', () => this.handleGuess(color, button));
+        button.addEventListener('click', () => {
+            // Use the same comparison method for click events
+            const computedColor = getComputedStyle(button).backgroundColor;
+            const targetComputedColor = getComputedStyle(this.colorDisplay).backgroundColor;
+            
+            if (computedColor === targetComputedColor) {
+                this.handleGuess(this.targetColor, button);
+            } else {
+                this.handleGuess(computedColor, button);
+            }
+        });
         return button;
     }
 
@@ -85,11 +106,10 @@ class ColorGame {
         increment.textContent = '+1';
         this.scoreDisplay.appendChild(increment);
 
-        // Animate the score display
         this.scoreDisplay.classList.add('animate');
         this.scoreDisplay.textContent = `Score: ${this.score}`;
 
-        // Remove animation classes after they complete
+        
         setTimeout(() => {
             this.scoreDisplay.classList.remove('animate');
             increment.remove();
@@ -107,7 +127,7 @@ class ColorGame {
     }
 
     resetGame() {
-        this.score = 0; // Reset the score
+        this.score = 0; 
         this.startNewGame();
     }
 
@@ -121,7 +141,6 @@ class ColorGame {
             this.optionsRow.appendChild(this.createColorOption(color, index));
         });
 
-        // Update the score display
         this.scoreDisplay.textContent = `Score: ${this.score}`;
     }
 }
